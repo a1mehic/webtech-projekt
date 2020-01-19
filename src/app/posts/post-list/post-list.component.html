@@ -1,0 +1,28 @@
+
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-accordion multi="true" *ngIf="posts.length > 0 && !isLoading">
+  <mat-expansion-panel *ngFor="let post of posts">
+    <mat-expansion-panel-header>
+      {{post.title}}
+    </mat-expansion-panel-header>
+    <div class="post-image">
+      <img [src]="post.imagePath" [alt]="post.title">
+    </div>
+    <p>{{post.content}}</p>
+    <mat-action-row>
+      <a mat-button color="white" [routerLink]="['/edit', post.id]">BEARBEITEN</a>
+      <button mat-button color="warn" (click)="onDelete(post.id)">LÖSCHEN</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="posts.length > 0"></mat-paginator>
+<p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">Es sind noch keine Posts erstellt worden.</p>
+
+<!-- *ngFor erlaubt es dieses Element so oft zu wiederholen wie oft es benötigt wird.
+Ich hänge hier gleich die Logik an und sage für jedes Post in den Posts
+(post-list.component.ts) erstelle mit ein ELEM
+
+multi=ture steht dafür, dass mehere Accordions gleichzeitig geöffnet werden dürfen
+
+*ngIf ist eine Bedinung, es heißt nicht es wird das ganze gehided sondern, wenn kein Element
+vorhanden ist, wird es nicht dem DOM hinzugefügt-->
