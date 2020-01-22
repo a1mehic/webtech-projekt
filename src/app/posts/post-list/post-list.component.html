@@ -16,6 +16,9 @@
   </mat-expansion-panel>
 </mat-accordion>
 <mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="posts.length > 0"></mat-paginator>
+<div class="wrap">
+    <input id="searchText" [ngModel]="searchText" (ngModelChange)="searchChange($event)" placeholder="Search">
+</div>
 <p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">Es sind noch keine Posts erstellt worden.</p>
 
 <!-- *ngFor erlaubt es dieses Element so oft zu wiederholen wie oft es benötigt wird.
