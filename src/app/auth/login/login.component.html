@@ -1,7 +1,12 @@
 <mat-card>
   <mat-spinner *ngIf="isLoading"></mat-spinner>
   <form (submit)="onLogin(loginForm)" #loginForm="ngForm" *ngIf="!isLoading">
-  <mat-form-field>
+     <!-- <mat-form-field>
+      <input
+        matInput name ="benutzername" ngModel type="text" placeholder="Benutzername" #benutzernameInput="ngModel" required>
+      <mat-error *ngIf="benutzernameInput.invalid">Bitte geben Sie Ihren Benutzernamen ein!</mat-error>
+    </mat-form-field> -->
+    <mat-form-field>
     <input
       matInput name ="email" ngModel type="email" placeholder="E-Mail" #emailInput="ngModel" required email>
     <mat-error *ngIf="emailInput.invalid">Bitte geben Sie E-Mail ein!</mat-error>

@@ -8,6 +8,8 @@ import {MatInputModule, MatCardModule,
   MatToolbarModule,
   MatExpansionModule,
   MatPaginatorModule,
+  MatListModule,
+  MatIconModule,
   MatProgressSpinnerModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -43,6 +45,8 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     MatExpansionModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
+    MatListModule,
+    MatIconModule,
     HttpClientModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
