@@ -1,18 +1,24 @@
 <mat-toolbar color="primary">
- <span> <a routerLink="/"> Alle Nachrichten</a></span>
+ <span> <a routerLink="/"> Alle Posts</a></span>
  <span class="spacer"></span>
  <ul>
    <li *ngIf="userIsAuthenticated">
     <a mat-button routerLink="/create" routerLinkActive="mat-accent"> Nachricht erstellen</a>
    </li>
    <li *ngIf="!userIsAuthenticated">
-    <a mat-button routerLink="/login" routerLinkActive="mat-accent"> Login</a>
+    <a mat-button routerLink="/login" routerLinkActive="mat-accent"> 
+      <mat-icon aria-hidden="false" aria-label="login">face</mat-icon>
+     Login</a>
    </li>
    <li *ngIf="!userIsAuthenticated">
-    <a mat-button routerLink="/signup" routerLinkActive="mat-accent"> Signup</a>
+    <a mat-button routerLink="/signup" routerLinkActive="mat-accent"> 
+      <mat-icon aria-hidden="false" aria-label="logout">person_add</mat-icon>
+      Registrieren</a>
    </li>
    <li *ngIf="userIsAuthenticated">
-    <button mat-button (click)="onLogout()"> Logout</button>
+    <button mat-button (click)="onLogout()">
+      <mat-icon aria-hidden="false" aria-label="logout">exit_to_app</mat-icon>
+       Logout</button>
    </li>
  </ul>
 
