@@ -41,3 +41,26 @@ mat-paginator{
 .mat-card:not([class*=mat-elevation-z]) {
   box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.2), 0 1px 3px 0 rgba(0,0,0,0.5);
 }
+
+#searchText {
+  width: 100%;
+  display: flex;
+  border: 3px solid #7b1fa2;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px 5px 5px 5px;
+  outline: none;
+}
+
+#searchText:focus{
+    color: #7b1fa2;
+}
+
+.wrap {
+  width: 10%;
+  position: absolute;
+  top: 3.5vh;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
