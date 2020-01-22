@@ -8,7 +8,7 @@ const userRoutes = require('./routes/user');
 
 const app = express();
 
-mongoose.connect("mongodb+srv://anesa:WebtechDB@cluster0-sbblp.mongodb.net/node-angular?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://anesa:Webtech@cluster0-sbblp.mongodb.net/node-angular?retryWrites=true&w=majority")
   .then(()=>{
 
     console.log('Verbunden mit der Datenbank');
