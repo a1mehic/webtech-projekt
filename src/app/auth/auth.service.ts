@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { AuthData } from './auth-data.module';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 @Injectable({ providedIn: 'root'})
 export class AuthService {
@@ -12,8 +14,9 @@ export class AuthService {
   private tokenTimer: NodeJS.Timer;
   private userId: string;
   private authStatusListener = new Subject<boolean>();
+  message: string = "Wrong credentials!";
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, public snackBar: MatSnackBar) {}
 
   getToken() {
     return this.token;
@@ -57,7 +60,12 @@ export class AuthService {
           this.saveAuthData(token, expirationDate, this.userId);
           this.router.navigate(['/']);
         }
-      });
+      }, error => {
+        this.snackBar.open('Wrong User', 'Close', {
+          duration: 3000,
+          panelClass: ['errorPopup']
+        }); 
+      })
   }
 
   autoAuthUser() {

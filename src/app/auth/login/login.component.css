@@ -5,3 +5,8 @@ mat-form-field{
 mat-spinner{
   margin: auto;
 }
+
+::ng-deep .errorPopup {
+  background: red;
+  color: white;
+}

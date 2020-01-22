@@ -11,6 +11,7 @@ import {MatInputModule, MatCardModule,
   MatListModule,
   MatIconModule,
   MatProgressSpinnerModule} from '@angular/material';
+import {MatSnackBarModule, MatSnackBar} from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { PostCreateComponent} from './posts/post-create/post-create.component';
@@ -49,7 +50,8 @@ import { FilterPipe } from './search_pipe/search.pipe'
     MatPaginatorModule,
     MatListModule,
     MatIconModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   // multi --> es sollen keine existierenden Interceptors überschrieben werden sondern als neue hinzugefügt werden
