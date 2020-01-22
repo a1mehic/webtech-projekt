@@ -19,6 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
+import { FilterPipe } from './search_pipe/search.pipe'
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     HeaderComponent,
     PostListComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
