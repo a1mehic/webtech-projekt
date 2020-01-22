@@ -29,7 +29,7 @@ app.use((req, res, next) =>{
   // unsere Ressourcen zugreifen
 
   res.setHeader("Access-Control-Allow-Headers",
-  "Origin, X-Requested-With, Content-Type, Accept");
+  "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   // beschränkt auf Domains die neben dem default Header bestimmte Gruppen von Headers senden
 
   res.setHeader("Access-Control-Allow-Methods",

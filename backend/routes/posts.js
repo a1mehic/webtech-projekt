@@ -5,6 +5,7 @@ const multer = require("multer");
 
 
 const Post = require("../models/post");
+const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
 
@@ -33,13 +34,18 @@ const storage = multer.diskStorage({
 
 // multer-code, versucht ein singlefile vom einkommenden request zu extrahieren und versucht ein
 // BildProperty im RequestBody zu finden
-router.post("", multer({storage: storage}).single("image"), (req, res, next) => {
+router.post(
+  "", 
+  checkAuth, 
+  multer({storage: storage}).single("image"), 
+  (req, res, next) => {
   const url = req.protocol + '://' + req.get('host');
   // neues Objekt
   const post = new Post({
     title: req.body.title,
     content: req.body.content,
-    imagePath: url + "/images/" + req.file.filename
+    imagePath: url + "/images/" + req.file.filename,
+    creator: req.userData.userId
   });
   post.save().then(createdPost => {
     res.status(201).json({
@@ -59,7 +65,10 @@ router.post("", multer({storage: storage}).single("image"), (req, res, next) => 
   //console.log(post);
 });
 
-router.put("/:id", multer({storage: storage}).single("image"), (req, res, next) => {
+router.put(
+  "/:id", 
+  checkAuth, multer({storage: storage}).single("image"), 
+  (req, res, next) => {
   let imagePath = req.body.imagePath;
  if(req.file){
   const url = req.protocol + '://' + req.get('host');
@@ -69,12 +78,17 @@ router.put("/:id", multer({storage: storage}).single("image"), (req, res, next) 
     _id: req.body.id,
     title: req.body.title,
     content: req.body.content,
-    imagePath: imagePath
+    imagePath: imagePath,
+    creator: req.userData.userId
   });
   console.log(post);
-  Post.updateOne({ _id: req.params.id }, post).then(result => {
-    console.log(result);
+  Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post).then(result => {
+    if(result.nModified > 0){
     res.status(200).json({ message: "Update erfolgreich!" });
+    }
+    else{
+      res.status(401).json({ message: "Sie haben die Berechtigung nicht dazu" });
+    }
   });
 });
 
@@ -112,10 +126,15 @@ router.get("/:id", (req, res, next) => {
 
 });
 
-router.delete("/:id", (req, res, next) => {
-  Post.deleteOne({ _id: req.params.id }).then(result => {
+router.delete("/:id", checkAuth, (req, res, next) => {
+  Post.deleteOne({ _id: req.params.id, creator: req.userData.userId}).then(result => {
     console.log(result);
-    res.status(200).json({ message: "Nachricht gelöscht!" });
+    if(result.n > 0){
+      res.status(200).json({ message: "Nachricht erfolgreich gelöscht!" });
+      }
+      else{
+        res.status(401).json({ message: "Sie haben die Berechtigung nicht dazu" });
+      }
   });
 });
 

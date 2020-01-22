@@ -4,6 +4,7 @@ import { PageEvent } from '@angular/material';
 
 import {Post} from '../post-model';
 import { PostsService } from '../posts-service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 
 @Component({
@@ -25,23 +26,32 @@ totalPosts = 0;
 postsPerPage = 2;
 currentPage = 1;
 pageSizeOptions = [1, 2, 5, 10];
+userIsAuthenticated = false;
+userId: string;
 private postsStub: Subscription;
+private authStatusSub: Subscription;
 
 
- constructor(public postsService: PostsService) {}
+ constructor(public postsService: PostsService, private authService: AuthService) {}
  // mit dem keyword public erstelle ich automatisch eine neue Property in dieser Komponente und
  // speichert den einkommenden Wert hinein
 
  ngOnInit() {
    this.isLoading = true;
    this.postsService.getPosts(this.postsPerPage, this.currentPage);
+   this.userId = this.authService.getUserId();
    this.postsStub = this.postsService
    .getPostUpdateListener()
     .subscribe((postData: {posts: Post[], postCount: number}) => {
       this.isLoading = false;
       this.totalPosts = postData.postCount;
       this.posts = postData.posts;
+      this.userId = this.authService.getUserId();
      });
+   this.userIsAuthenticated = this.authService.getIsAuth();
+   this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+      this.userIsAuthenticated = isAuthenticated;
+   });
  }
 
 onChangedPage(pageData: PageEvent) {
@@ -63,5 +73,6 @@ onDelete(postId: string) {
 
  ngOnDestroy() {
    this.postsStub.unsubscribe();
+   this.authStatusSub.unsubscribe();
  }
 }
