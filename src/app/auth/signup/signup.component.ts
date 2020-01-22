@@ -15,7 +15,7 @@ export class SignupComponent {
 
   onSignup(form: NgForm) {
     if (form.invalid) {
-      this.snackBar.open('Sing-Up failed!', 'Close', {
+      this.snackBar.open('Sign-Up failed!', 'Close', {
         duration: 3000,
         panelClass: ['errorPopup']
       }); 
