@@ -30,6 +30,8 @@ userIsAuthenticated = false;
 userId: string;
 private postsStub: Subscription;
 private authStatusSub: Subscription;
+searchText: string = "";
+filterargs = {title : this.searchText};
 
 
  constructor(public postsService: PostsService, private authService: AuthService) {}
@@ -75,4 +77,10 @@ onDelete(postId: string) {
    this.postsStub.unsubscribe();
    this.authStatusSub.unsubscribe();
  }
+ 
+  public searchChange(input: string): void {
+  this.searchText = input.toLowerCase();
+  this.filterargs = {title : this.searchText};
+ } 
+ 
 }
