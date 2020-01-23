@@ -23,6 +23,8 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { FilterPipe } from './search_pipe/search.pipe'
+import { FilterProfilePipe } from './search_pipe/search_profile.pipe'
+import { UserProfile } from './profile/profile.component';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { FilterPipe } from './search_pipe/search.pipe'
     PostListComponent,
     LoginComponent,
     SignupComponent,
-    FilterPipe
+    FilterPipe,
+    FilterProfilePipe,
+    UserProfile
   ],
   imports: [
     BrowserModule,
