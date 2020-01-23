@@ -1,0 +1,25 @@
+<h1>
+    Meine Posts:
+</h1>
+
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+<mat-list cols="2" *ngIf="posts.length > 0 && !isLoading">
+
+  <mat-card class="example-card" *ngFor="let post of posts | filterProfile:filterargs; let i = index">
+    {{i+1}}
+    <mat-card-title>
+      {{post.title}}
+  </mat-card-title>
+   <!-- <div class="post-image">-->
+      <img mat-card-image [src]="post.imagePath" [alt]="post.title">
+     <!--</div>-->
+   <mat-card-content> <p>{{post.content}}</p></mat-card-content>
+    <mat-card-actions *ngIf="userIsAuthenticated && userId === post.creator">
+      <a mat-button color="white" [routerLink]="['/edit', post.id]">BEARBEITEN</a>
+      <button mat-button color="warn" (click)="onDelete(post.id)">LÖSCHEN</button>
+    </mat-card-actions>
+  </mat-card>
+</mat-list>
+<mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="posts.length > 0"></mat-paginator>
+<p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">Es sind noch keine Posts erstellt worden.</p>
