@@ -14,7 +14,6 @@ export class AuthService {
   private tokenTimer: NodeJS.Timer;
   private userId: string;
   private authStatusListener = new Subject<boolean>();
-  message: string = "Wrong credentials!";
 
   constructor(private http: HttpClient, private router: Router, public snackBar: MatSnackBar) {}
 
@@ -38,7 +37,17 @@ export class AuthService {
     const authData: AuthData = {email, passwort};
     this.http.post('http://localhost:3000/user/signup', authData)
     .subscribe( response => {
-      console.log(response);
+      this.snackBar.open('You are now signed up!', 'Close', {
+        duration: 3000,
+        panelClass: ['successPopup']
+      });
+      this.router.navigate(['login']);
+    }, error => {
+      this.snackBar.open('Sign-Up failed', 'Close', {
+        duration: 3000,
+        panelClass: ['errorPopup']
+      });
+      this.router.navigate(['/']);
     });
   }
 
