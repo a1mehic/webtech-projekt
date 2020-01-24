@@ -1,13 +1,13 @@
 import {Component, Input, OnInit, OnDestroy} from '@angular/core';
 import {Subscription} from 'rxjs';
 import { PageEvent } from '@angular/material';
+import { HttpClient } from '@angular/common/http';
 
 import {Post} from '../posts/post-model';
 import { PostsService } from '../posts/posts-service';
 import { AuthService } from 'src/app/auth/auth.service';
 
 
-// hier Sachen definieren wie das Template
 @Component({
 selector: 'app-user-profile',
 templateUrl: './profile.component.html',
@@ -17,7 +17,7 @@ styleUrls: ['./profile.component.css']
 
 export class UserProfile{
 
-    
+i = 0;
 posts: Post[] = [];
 isLoading = false;
 totalPosts = 0;
@@ -29,14 +29,13 @@ userId: string;
 private postsStub: Subscription;
 private authStatusSub: Subscription;
 filterargs = {"creator" : ''};
-
-
+username: string;
 
  constructor(public postsService: PostsService, private authService: AuthService) {}
- // mit dem keyword public erstelle ich automatisch eine neue Property in dieser Komponente und
- // speichert den einkommenden Wert hinein
 
  ngOnInit() {
+   this.username = this.authService.getUsername();
+   console.log(this.username);
    this.isLoading = true;
    this.postsService.getPosts(this.postsPerPage, this.currentPage);
    this.userId = this.authService.getUserId();
@@ -53,6 +52,7 @@ filterargs = {"creator" : ''};
       this.userIsAuthenticated = isAuthenticated;
    });
    this.filterargs = {"creator" : this.userId};
+   
  }
 
 onChangedPage(pageData: PageEvent) {
@@ -68,7 +68,6 @@ onDelete(postId: string) {
   this.isLoading = true;
   this.postsService.deletePost(postId).subscribe(() => {
     this.postsService.getPosts(this.postsPerPage, this.currentPage);
-    // fetchen neue Posts sobald wir ein Post gelöscht haben
   });
 }
 
