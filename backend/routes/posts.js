@@ -19,7 +19,7 @@ const MIME_Type= {
 const storage = multer.diskStorage({
   destination: (req, file, cb)=>{
     const isValid = MIME_Type[file.mimetype];
-    let error = new Error("Nicht erlaubter Mime-Type");
+    let error = new Error("Nicht erlaubter Mime-Type.");
     if(isValid){
       error= null;
     }
@@ -49,7 +49,7 @@ router.post(
   });
   post.save().then(createdPost => {
     res.status(201).json({
-    message: 'Nachricht wurde erfolgreich hinzugefügt',
+    message: 'Nachricht wurde erfolgreich hinzugefügt.',
     post: {
       // title: createdPost.title,
       // content: createdPost.content,
@@ -83,11 +83,11 @@ router.put(
   });
   console.log(post);
   Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post).then(result => {
-    if(result.nModified > 0){
-    res.status(200).json({ message: "Update erfolgreich!" });
+    if(result.n > 0){
+    res.status(200).json({ message: "Update war erfolgreich!" });
     }
     else{
-      res.status(401).json({ message: "Sie haben die Berechtigung nicht dazu" });
+      res.status(401).json({ message: "Sie haben die Berechtigung nicht dazu." });
     }
   });
 });
@@ -108,7 +108,7 @@ router.get("", (req, res, next) => {
     })
     .then(count => {
       res.status(200).json({
-        message: "Nachricht erfolgreich gefunden",
+        message: "Nachricht wurde erfolgreich gefunden.",
         posts: fetchedPosts,
         maxPosts: count // Der Wert der vohandenen eintäge in der DB
       });
@@ -120,7 +120,7 @@ router.get("/:id", (req, res, next) => {
     if(post){
       res.status(200).json(post);
     }else{
-      res.status(404).json({message: 'Nachricht nicht gefunden'});
+      res.status(404).json({message: 'Nachricht wurde nicht gefunden.'});
     }
   });
 
@@ -130,10 +130,10 @@ router.delete("/:id", checkAuth, (req, res, next) => {
   Post.deleteOne({ _id: req.params.id, creator: req.userData.userId}).then(result => {
     console.log(result);
     if(result.n > 0){
-      res.status(200).json({ message: "Nachricht erfolgreich gelöscht!" });
+      res.status(200).json({ message: "Nachricht wurde erfolgreich gelöscht!" });
       }
       else{
-        res.status(401).json({ message: "Sie haben die Berechtigung nicht dazu" });
+        res.status(401).json({ message: "Sie haben die Berechtigung nicht dazu." });
       }
   });
 });

@@ -77,10 +77,10 @@ onDelete(postId: string) {
    this.postsStub.unsubscribe();
    this.authStatusSub.unsubscribe();
  }
- 
+
   public searchChange(input: string): void {
   this.searchText = input.toLowerCase();
   this.filterargs = {title : this.searchText};
- } 
- 
+ }
+
 }
