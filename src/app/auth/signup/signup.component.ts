@@ -23,7 +23,8 @@ export class SignupComponent {
       return;
     } else {
       this.isLoading = true;
-      this.authService.createUser(form.value.email, form.value.passwort);
+      this.authService.createUser(form.value.username, form.value.email, form.value.passwort);
+      this.userId = this.authService.getUserId();
     }
   }
 }
