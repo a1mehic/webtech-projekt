@@ -10,6 +10,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class SignupComponent {
   isLoading = false;
+  userId: string;
 
   constructor(public authService: AuthService, private router: Router, private snackBar: MatSnackBar) {}
 
