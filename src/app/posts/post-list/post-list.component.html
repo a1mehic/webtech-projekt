@@ -18,7 +18,7 @@
 </mat-list>
 <mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="posts.length > 0"></mat-paginator>
 <div class="wrap">
-    <input id="searchText" [ngModel]="searchText" (ngModelChange)="searchChange($event)" placeholder="Search">
+    <input id="searchText" [ngModel]="searchText" (ngModelChange)="searchChange($event)" placeholder="Suche">
 </div>
 <p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">Es sind noch keine Posts erstellt worden.</p>
 

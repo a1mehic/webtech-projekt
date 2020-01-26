@@ -19,13 +19,14 @@ export class SignupComponent {
       this.snackBar.open('Sign-Up failed!', 'Close', {
         duration: 3000,
         panelClass: ['errorPopup']
-      }); 
+      });
       this.router.navigate(['/']);
       return;
     } else {
       this.isLoading = true;
       this.authService.createUser(form.value.username, form.value.email, form.value.passwort);
       this.userId = this.authService.getUserId();
+      this.router.navigate(['/login']);
     }
   }
 }
