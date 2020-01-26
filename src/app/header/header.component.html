@@ -3,6 +3,11 @@
  <span class="spacer"></span>
  <ul>
    <li *ngIf="userIsAuthenticated">
+      <a mat-button routerLink="/profile" routerLinkActive="mat-accent"> 
+      <mat-icon aria-hidden="false" aria-label="Profile">home</mat-icon>
+      Profil</a>
+   </li>
+   <li *ngIf="userIsAuthenticated">
     <a mat-button routerLink="/create" routerLinkActive="mat-accent"> Post erstellen</a>
    </li>
    <li *ngIf="!userIsAuthenticated">

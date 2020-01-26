@@ -10,6 +10,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class SignupComponent {
   isLoading = false;
+  userId: string;
 
   constructor(public authService: AuthService, private router: Router, private snackBar: MatSnackBar) {}
 
@@ -23,7 +24,8 @@ export class SignupComponent {
       return;
     } else {
       this.isLoading = true;
-      this.authService.createUser(form.value.email, form.value.passwort);
+      this.authService.createUser(form.value.username, form.value.email, form.value.passwort);
+      this.userId = this.authService.getUserId();
       this.router.navigate(['/login']);
     }
   }

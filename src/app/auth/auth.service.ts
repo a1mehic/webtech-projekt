@@ -14,6 +14,8 @@ export class AuthService {
   private tokenTimer: NodeJS.Timer;
   private userId: string;
   private authStatusListener = new Subject<boolean>();
+  private mail: string;
+  private username: string;
 
   constructor(private http: HttpClient, private router: Router, public snackBar: MatSnackBar) {}
 
@@ -33,8 +35,12 @@ export class AuthService {
     return this.userId;
   }
 
-  createUser(email: string, passwort: string) {
-    const authData: AuthData = {email, passwort};
+  getUsername(){
+    return this.username;
+  }
+
+  createUser(username: string, email: string, passwort: string) {
+    const authData: AuthData = {username, email, passwort};
     this.http.post('http://localhost:3000/user/signup', authData)
     .subscribe( response => {
       this.snackBar.open('You are now signed up!', 'Close', {
@@ -51,9 +57,11 @@ export class AuthService {
     });
   }
 
-  login(email: string, passwort: string) {
-    const authData: AuthData = {email, passwort};
-    this.http.post<{ token: string, expiresIn: number, userId: string }>('http://localhost:3000/user/login', authData)
+  login(email: string, passwort: string, username:string = "dummy") {
+    this.mail = email;
+
+    const authData: AuthData = {username, email, passwort};
+    this.http.post<{ token: string, expiresIn: number, userId: string, username: string }>('http://localhost:3000/user/login', authData)
       .subscribe( response => {
         const token = response.token;
         this.token = token;
@@ -65,9 +73,11 @@ export class AuthService {
           this.authStatusListener.next(true);
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+          this.username = response.username;
           console.log(expirationDate);
-          this.saveAuthData(token, expirationDate, this.userId);
+          this.saveAuthData(this.username, token, expirationDate, this.userId);
           this.router.navigate(['/']);
+          
         }
       }, error => {
         this.snackBar.open('Wrong User', 'Close', {
@@ -85,6 +95,7 @@ export class AuthService {
     const now = new Date();
     const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
     if (expiresIn > 0) {
+      this.username = authInformation.username;
       this.token = authInformation.token;
       this.isAuthenticated = true;
       this.userId = authInformation.userId;
@@ -110,7 +121,8 @@ export class AuthService {
     }, duration * 1000);    // setTimeout arbeitet in Millisekunden und nicht Sekunden
   }
 
-  private saveAuthData(token: string, expirationDate: Date, userId: string) {
+  private saveAuthData(username: string, token: string, expirationDate: Date, userId: string) {
+    localStorage.setItem('username', username);
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());    // ISOString Standardversion fürs Datum
     localStorage.setItem('userId', userId);
@@ -118,6 +130,7 @@ export class AuthService {
   }
 
   private clearAuthData() {
+    localStorage.removeItem('username');
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
     localStorage.removeItem('userId');
@@ -127,13 +140,15 @@ export class AuthService {
     const token = localStorage.getItem('token');
     const expirationDate = localStorage.getItem('expiration');
     const userId = localStorage.getItem('userId');
+    const username = localStorage.getItem('username');
     if (!token || !expirationDate) {
       return;
     }
     return {
       token,
       expirationDate: new Date(expirationDate),
-      userId
+      userId,
+      username
     };
   }
 }

@@ -10,6 +10,7 @@ router.post('/signup', (req,res,next)=>{
   bcrypt.hash(req.body.passwort, 10)
   .then(hash =>{
     const user = new User({
+      username: req.body.username,
       email: req.body.email,
       passwort: hash
       // passwort: req.body.passwort so würden wir das Passwort ohne Verschlüsselung
@@ -58,6 +59,7 @@ router.post("/login", (req, res, next) => {
     // nach 1 stunde erfolgt automatisch ein Logout
 
     res.status(200).json({
+      username: fetchedUser.username,
       token: token,
       expiresIn: 3600,    // 1 Stunde in Sekunden
       userId: fetchedUser._id
