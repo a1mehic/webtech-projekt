@@ -42,8 +42,16 @@ mat-paginator{
   box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.2), 0 1px 3px 0 rgba(0,0,0,0.5);
 }
 
+
+
+#searchText:focus{
+    color: #7b1fa2;
+}
+
+
+
 #searchText {
-  width: 100%;
+  width: 98%;
   display: flex;
   border: 3px solid #3f51b5;
   padding: 5px;
@@ -52,15 +60,4 @@ mat-paginator{
   outline: none;
 }
 
-#searchText:focus{
-    color: #7b1fa2;
-}
-
-.wrap {
-  width: 617px;
-  position: absolute;
-  top: 4vh;
-  transform: translate(-50%, -50%);
-  margin-left: 39.4%;
-}
 
