@@ -60,4 +60,6 @@ mat-paginator{
   outline: none;
 }
 
-
+#searchText:invalid {
+  border: 3px solid red;
+}
