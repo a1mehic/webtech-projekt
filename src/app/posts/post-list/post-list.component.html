@@ -3,7 +3,7 @@
 <mat-list cols="2" *ngIf="posts.length > 0 && !isLoading">
   <mat-card class="example-card" >
   <div class="wrap">
-    <input id="searchText" [ngModel]="searchText" (ngModelChange)="searchChange($event)" placeholder="Suche">
+    <input id="searchText" [ngModel]="searchText" (ngModelChange)="searchChange($event)" placeholder="Suche" pattern="[^'\x22]+">
   </div>
 </mat-card>
   <mat-card class="example-card" *ngFor="let post of posts | filterPosts:filterargs">
